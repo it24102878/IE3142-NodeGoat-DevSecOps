@@ -29,16 +29,16 @@ function ContributionsHandler(db) {
 
         /*jslint evil: true */
         // Insecure use of eval() to parse inputs
-        const preTax = eval(req.body.preTax);
+        /*const preTax = eval(req.body.preTax);
         const afterTax = eval(req.body.afterTax);
         const roth = eval(req.body.roth);
 
-        /*
-        //Fix for A1 -1 SSJS Injection attacks - uses alternate method to eval
-        const preTax = parseInt(req.body.preTax);
-        const afterTax = parseInt(req.body.afterTax);
-        const roth = parseInt(req.body.roth);
-        */
+        
+        //Fix for A1 -1 SSJS Injection attacks - uses alternate method to eval */
+        const preTax = Number(req.body.preTax);
+        const afterTax = Number(req.body.afterTax);
+        const roth = Number(req.body.roth);
+        
         const {
             userId
         } = req.session;
@@ -52,6 +52,8 @@ function ContributionsHandler(db) {
                 userId,
                 environmentalScripts
             });
+
+        
         }
         // Prevent more than 30% contributions
         if (preTax + afterTax + roth > 30) {
