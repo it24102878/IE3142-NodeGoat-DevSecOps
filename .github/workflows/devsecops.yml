@@ -3,6 +3,7 @@ name: DevSecOps Pipeline
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,9 +17,25 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
+
+    env:
+      MONGODB_URI: ${{ secrets.NODEGOAT_MONGODB_URI }}
+      COOKIE_SECRET: ${{ secrets.NODEGOAT_COOKIE_SECRET }}
+      CRYPTO_KEY: ${{ secrets.NODEGOAT_CRYPTO_KEY }}
+      ZAP_API_KEY: ${{ secrets.NODEGOAT_ZAP_API_KEY }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+
+      - name: Verify required runtime secrets
+        shell: bash
+        run: |
+          test -n "$MONGODB_URI" || { echo "MONGODB_URI is not configured"; exit 1; }
+          test -n "$COOKIE_SECRET" || { echo "COOKIE_SECRET is not configured"; exit 1; }
+          test -n "$CRYPTO_KEY" || { echo "CRYPTO_KEY is not configured"; exit 1; }
+          test -n "$ZAP_API_KEY" || { echo "ZAP_API_KEY is not configured"; exit 1; }
+          echo "Required runtime secrets are configured."
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
