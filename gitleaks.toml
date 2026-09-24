@@ -1,0 +1,10 @@
+title = "NodeGoat Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "nodegoat-phase8-demo-secret"
+description = "Controlled marker used to verify the CI secret security gate"
+regex = '''NODEGOAT_DEMO_SECRET_[A-Z0-9]{16}'''
+tags = ["secret", "phase8-test"]
