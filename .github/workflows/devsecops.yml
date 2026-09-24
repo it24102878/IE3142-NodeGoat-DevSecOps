@@ -8,6 +8,10 @@ permissions:
   contents: read
 
 jobs:
+
+  # ==========================================
+  # 1. BUILD AND TEST
+  # ==========================================
   build-test:
     name: Build and Test
     runs-on: ubuntu-latest
@@ -20,7 +24,6 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: "12"
-          package-manager-cache: false
 
       - name: Install dependencies
         run: npm install
@@ -31,6 +34,10 @@ jobs:
       - name: Build Docker image
         run: docker build -t nodegoat-secure .
 
+
+  # ==========================================
+  # 2. DEPENDENCY SCANNING
+  # ==========================================
   dependency-scan:
     name: npm Dependency Scan
     runs-on: ubuntu-latest
@@ -43,7 +50,6 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: "12"
-          package-manager-cache: false
 
       - name: Install dependencies
         run: npm install
@@ -51,6 +57,10 @@ jobs:
       - name: Run npm audit
         run: npm audit || true
 
+
+  # ==========================================
+  # 3. SEMGREP SAST
+  # ==========================================
   semgrep:
     name: Semgrep SAST
     runs-on: ubuntu-latest
@@ -66,6 +76,10 @@ jobs:
             semgrep/semgrep \
             semgrep scan --config auto /src
 
+
+  # ==========================================
+  # 4. GITLEAKS SECRET SCANNING
+  # ==========================================
   gitleaks:
     name: Gitleaks Secret Scan
     runs-on: ubuntu-latest
@@ -81,8 +95,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_COMMENTS: "false"
-          
-    trivy:
+
+
+  # ==========================================
+  # 5. TRIVY CONTAINER SCANNING
+  # ==========================================
+  trivy:
     name: Trivy Container Scan
     runs-on: ubuntu-latest
 
