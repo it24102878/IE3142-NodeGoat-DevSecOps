@@ -17,7 +17,6 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
 
-
     env:
       MONGODB_URI: ${{ secrets.NODEGOAT_MONGODB_URI }}
       COOKIE_SECRET: ${{ secrets.NODEGOAT_COOKIE_SECRET }}
@@ -112,6 +111,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_CONFIG: gitleaks.toml
 
 
   # ==========================================

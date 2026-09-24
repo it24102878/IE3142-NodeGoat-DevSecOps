@@ -4,8 +4,11 @@ services:
   web:
     build: .
     environment:
-      NODE_ENV:
-      MONGODB_URI: mongodb://mongo:27017/nodegoat
+      NODE_ENV: development
+      MONGODB_URI: "${MONGODB_URI:?MONGODB_URI is required}"
+      COOKIE_SECRET: "${COOKIE_SECRET:?COOKIE_SECRET is required}"
+      CRYPTO_KEY: "${CRYPTO_KEY:?CRYPTO_KEY is required}"
+      ZAP_API_KEY: "${ZAP_API_KEY:-}"
     command: sh -c "until nc -z -w 2 mongo 27017 && echo 'mongo is ready for connections' && node artifacts/db-reset.js && npm start; do sleep 2; done"
     ports:
       - "4000:4000"
