@@ -1,0 +1,5 @@
+57f638b3c4495c14327a06c742c1de8d291a02b0:config/env/test.js:generic-api-key:6
+32f597adacbc351f134d05ba7661afeacd233a78:config/env/development.js:generic-api-key:18
+32f597adacbc351f134d05ba7661afeacd233a78:config/env/test.js:generic-api-key:5
+c5f265d7a32f4a3d6478c1badedde944219d48b5:artifacts/cert/server.key:private-key:1
+e0045e653a53b846c22aa261cc80989bfc4ddb24:app/cert/key.pem:private-key:1
