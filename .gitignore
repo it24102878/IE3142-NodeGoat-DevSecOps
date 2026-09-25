@@ -30,3 +30,7 @@ test/e2e/videos/
 
 # ignore Snyk Code scanner files
 .dccache
+
+# Do not commit private TLS keys
+artifacts/cert/*.key
+app/cert/*.pem
